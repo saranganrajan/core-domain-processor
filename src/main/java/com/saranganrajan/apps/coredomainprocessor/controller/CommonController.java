@@ -29,8 +29,8 @@ public class CommonController {
     }
 
     @PostMapping(path = "/policy/premium/pay", consumes = "application/json")
-    public ResponseEntity<String> processPolicy(@RequestBody List<PolicyTransaction> policies) {
-        return ResponseEntity.ok().body(policies.get(0).getPolicyNumber());
+    public ResponseEntity<List<PolicyTransaction>> processPolicy(@RequestBody List<PolicyTransaction> policies) {
+        return ResponseEntity.ok().body(policies);
     }
 
     @GetMapping
