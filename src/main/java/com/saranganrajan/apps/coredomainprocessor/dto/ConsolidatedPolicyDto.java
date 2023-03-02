@@ -1,4 +1,4 @@
 package com.saranganrajan.apps.coredomainprocessor.dto;
 
-public class ConsolidatedEntity {
+public class ConsolidatedPolicyDto {
 }

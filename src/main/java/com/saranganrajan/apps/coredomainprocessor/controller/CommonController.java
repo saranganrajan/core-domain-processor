@@ -4,6 +4,7 @@ import com.saranganrajan.apps.coredomainprocessor.dto.PolicyTransaction;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.CustomerEntity;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
 import com.saranganrajan.apps.coredomainprocessor.service.customer.CustomerService;
+import com.saranganrajan.apps.coredomainprocessor.service.manager.ManagerService;
 import com.saranganrajan.apps.coredomainprocessor.service.policy.PolicyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,18 @@ public class CommonController {
     @Autowired
     CustomerService customerService;
 
-    public CommonController(PolicyService policyService, CustomerService customerService) {
+    @Autowired
+    ManagerService managerService;
+
+    public CommonController(PolicyService policyService, CustomerService customerService, ManagerService managerService) {
         this.policyService = policyService;
         this.customerService = customerService;
+        this.managerService = managerService;
     }
 
     @PostMapping(path = "/policy/premium/pay", consumes = "application/json")
-    public ResponseEntity<List<PolicyTransaction>> processPolicy(@RequestBody List<PolicyTransaction> policies) {
-        return ResponseEntity.ok().body(policies);
+    public void processPolicy(@RequestBody List<PolicyTransaction> policies) {
+        managerService.processTransactions(policies);
     }
 
     @GetMapping

@@ -1,7 +1,6 @@
 package com.saranganrajan.apps.coredomainprocessor.external.database.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,9 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ahmf_policy")
 public class PolicyEntity {
 
@@ -38,7 +40,7 @@ public class PolicyEntity {
     private String lastPaymentMode;
 
     @Column(name = "pol_stat_cd")
-    private Integer policyStatusCode;
+    private String policyStatusCode;
 
     @Column(name = "agt_code")
     private String agentCode;

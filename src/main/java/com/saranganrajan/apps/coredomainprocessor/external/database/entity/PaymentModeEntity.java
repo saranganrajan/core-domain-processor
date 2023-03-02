@@ -16,22 +16,14 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ahmf_customer")
-public class CustomerEntity {
+@Table(name = "ahmf_payment_mode")
+public class PaymentModeEntity {
 
     @Id
-    @Column(name = "customer_number")
-    private String customerNumber;
+    @Column(name = "pmt_mode")
+    private String paymentMode;
 
-    @Column(name = "customer_name")
-    private String customerName;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "dob")
-    private LocalDate dateOfBirth;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "phone")
-    private String phoneNumber;
 }
