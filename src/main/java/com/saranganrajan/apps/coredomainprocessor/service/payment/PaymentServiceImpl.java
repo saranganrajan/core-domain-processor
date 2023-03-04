@@ -37,4 +37,9 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentHistoryEntity savePayment(PaymentHistoryEntity paymentHistoryEntity) {
         return paymentHistoryRepository.save(paymentHistoryEntity);
     }
+
+    @Override
+    public Optional<PaymentModeEntity> getPaymentModeByCode(String mode) {
+        return paymentModeRepository.findById(mode);
+    }
 }

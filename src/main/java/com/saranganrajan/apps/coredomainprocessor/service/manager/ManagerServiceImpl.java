@@ -1,8 +1,13 @@
 package com.saranganrajan.apps.coredomainprocessor.service.manager;
 
+import com.saranganrajan.apps.coredomainprocessor.dto.CustomerPolicy;
+import com.saranganrajan.apps.coredomainprocessor.dto.Policy;
+import com.saranganrajan.apps.coredomainprocessor.dto.PolicyAggregate;
 import com.saranganrajan.apps.coredomainprocessor.dto.PolicyTransaction;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PaymentHistoryEntity;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
+import com.saranganrajan.apps.coredomainprocessor.external.domain.feign.DomainFeignClient;
+import com.saranganrajan.apps.coredomainprocessor.handler.AggregateHandler;
 import com.saranganrajan.apps.coredomainprocessor.service.agent.AgentService;
 import com.saranganrajan.apps.coredomainprocessor.service.customer.CustomerService;
 import com.saranganrajan.apps.coredomainprocessor.service.payment.PaymentService;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,34 +32,51 @@ public class ManagerServiceImpl implements ManagerService {
     PlanService planService;
     AgentService agentService;
     PaymentService paymentService;
+    AggregateHandler aggregateHandler;
+    DomainFeignClient domainFeignClient;
 
     @Autowired
     public ManagerServiceImpl(PolicyService policyService,
                               CustomerService customerService,
                               PlanService planService,
                               AgentService agentService,
-                              PaymentService paymentService) {
+                              PaymentService paymentService,
+                              AggregateHandler aggregateHandler,
+                              DomainFeignClient domainFeignClient) {
         this.policyService = policyService;
         this.customerService = customerService;
         this.planService = planService;
         this.agentService = agentService;
         this.paymentService = paymentService;
+        this.aggregateHandler = aggregateHandler;
+        this.domainFeignClient = domainFeignClient;
     }
 
     @Override
     @Transactional
     public void processTransactions(List<PolicyTransaction> policyTransactions) {
         if (!CollectionUtils.isEmpty(policyTransactions)) {
-            policyTransactions.parallelStream().forEach(policyTransaction -> {
+            policyTransactions.forEach(policyTransaction -> {
                 log.info("Processing policy : " + policyTransaction.getPolicyNumber());
                 Optional<PolicyEntity> policyEntity = policyService.getPolicyInformation(policyTransaction.getPolicyNumber());
                 if (policyEntity.isPresent()) {
-                    PolicyEntity maybePolicyEntity = policyEntity.get();
-                    maybePolicyEntity.setLastPaymentMode(policyTransaction.getPaymentMode());
                     //Update Policy
-                    updatePolicy(policyTransaction, maybePolicyEntity);
+                    updatePolicy(policyTransaction, policyEntity.get());
                     //get Payment History
                     updatePayment(policyTransaction);
+                    //Form PolicyAggregate
+                    try {
+                        List<CustomerPolicy> customerPolicies = aggregateHandler.prepareCustomerPolicyObject(policyEntity.get());
+                        PolicyAggregate policyAggregate = PolicyAggregate.builder()
+                                .policy(aggregateHandler.preparePolicyObject(policyEntity.get()))
+                                .customerPolicies(customerPolicies)
+                                .customers(aggregateHandler.prepareCustomers(customerPolicies))
+                                .build();
+                        log.info(policyAggregate.toString());
+                        domainFeignClient.processPolicyTransaction(policyAggregate);
+                    } catch (SQLException sqlException) {
+                       log.error(sqlException.getLocalizedMessage());
+                    }
                 }
             });
         }
@@ -71,9 +94,11 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("Updated Policy Payment : " + policyTransaction.getPolicyNumber());
     }
 
-    private void updatePolicy(PolicyTransaction policyTransaction, PolicyEntity maybePolicyEntity) {
-        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
-        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
+    private void updatePolicy(PolicyTransaction policyTransaction, PolicyEntity policyEntity) {
+        PolicyEntity maybePolicyEntity = policyEntity;
+        maybePolicyEntity.setLastPaymentMode(policyTransaction.getPaymentMode());
+//        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
+//        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
         policyService.savePolicy(maybePolicyEntity);
         log.info("Updated Policy Transaction : " + policyTransaction.getPolicyNumber());
     }

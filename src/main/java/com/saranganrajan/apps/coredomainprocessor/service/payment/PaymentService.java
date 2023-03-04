@@ -12,4 +12,6 @@ public interface PaymentService {
     Optional<PaymentHistoryEntity> getPaymentHistories(String policyNumber);
     List<PaymentModeEntity> getPaymentModes();
     PaymentHistoryEntity savePayment(PaymentHistoryEntity paymentHistoryEntity);
+
+    Optional<PaymentModeEntity> getPaymentModeByCode(String mode);
 }

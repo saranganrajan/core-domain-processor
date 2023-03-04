@@ -44,8 +44,8 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     @Override
-    public Optional<CustomerPolicyEntity> getCustomerPolicies(String policyNumber) throws SQLException {
-        return customerPolicyRepository.findById(policyNumber);
+    public List<CustomerPolicyEntity> getCustomersByPolicy(String policyNumber) throws SQLException {
+        return customerPolicyRepository.findCustomerPolicyByPolicyNumber(policyNumber);
     }
 
     @Override
@@ -56,5 +56,10 @@ public class PolicyServiceImpl implements PolicyService {
     @Override
     public PolicyEntity savePolicy(PolicyEntity policyEntity) {
         return policyRepository.save(policyEntity);
+    }
+
+    @Override
+    public Optional<PolicyStatusEntity> getPolicyStatusByCode(String code) {
+       return policyStatusRepository.findById(code);
     }
 }

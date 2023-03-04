@@ -1,9 +1,7 @@
 package com.saranganrajan.apps.coredomainprocessor.service.customer;
 
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.CustomerEntity;
-import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
 import com.saranganrajan.apps.coredomainprocessor.external.database.repository.CustomerRepository;
-import com.saranganrajan.apps.coredomainprocessor.external.database.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,5 +22,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerEntity> getCustomers() throws SQLException {
             return customerRepository.findAll();
+    }
+
+    @Override
+    public Optional<CustomerEntity> getCustomerById(String customerNumber) {
+        return customerRepository.findById(customerNumber);
     }
 }

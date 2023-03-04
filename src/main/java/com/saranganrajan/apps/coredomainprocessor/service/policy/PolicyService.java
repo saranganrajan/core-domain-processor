@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface PolicyService {
     List<PolicyEntity> getAllPolicies() throws SQLException;
     List<PolicyStatusEntity> getPolicyStatuses() throws SQLException;
-    Optional<CustomerPolicyEntity> getCustomerPolicies(String policyNumber) throws SQLException;
+    List<CustomerPolicyEntity> getCustomersByPolicy(String policyNumber) throws SQLException;
     Optional<PolicyEntity> getPolicyInformation(String policyNumber);
     PolicyEntity savePolicy(PolicyEntity policyEntity);
+    Optional<PolicyStatusEntity> getPolicyStatusByCode(String code);
 }

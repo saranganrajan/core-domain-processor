@@ -12,4 +12,7 @@ public class PolicyCustomerId implements Serializable {
         this.customerNumber = customerNumber;
         this.linkType = linkType;
     }
+
+    public PolicyCustomerId() {
+    }
 }

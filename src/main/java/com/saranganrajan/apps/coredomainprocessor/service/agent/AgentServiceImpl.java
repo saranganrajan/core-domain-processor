@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class AgentServiceImpl implements AgentService {
@@ -13,8 +14,17 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     AgentRepository agentRepository;
 
+    public AgentServiceImpl(AgentRepository agentRepository) {
+        this.agentRepository = agentRepository;
+    }
+
     @Override
     public List<AgentEntity> getAgents() {
         return agentRepository.findAll();
+    }
+
+    @Override
+    public Optional<AgentEntity> getAgentById(String agentCode) {
+        return agentRepository.findById(agentCode);
     }
 }

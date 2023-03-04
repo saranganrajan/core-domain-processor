@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,5 +24,10 @@ public class PlanServiceImpl implements PlanService {
         return planRepository.findAll().stream()
                 .filter(PlanEntity::isActive)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<PlanEntity> getPlanById(String planCode) {
+        return planRepository.findById(planCode);
     }
 }
