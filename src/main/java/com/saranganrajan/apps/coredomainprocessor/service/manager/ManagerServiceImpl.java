@@ -50,24 +50,31 @@ public class ManagerServiceImpl implements ManagerService {
                 if (policyEntity.isPresent()) {
                     PolicyEntity maybePolicyEntity = policyEntity.get();
                     maybePolicyEntity.setLastPaymentMode(policyTransaction.getPaymentMode());
-
-                    maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
-                    maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
                     //Update Policy
-                    policyService.savePolicy(maybePolicyEntity);
-                    log.info("Updated Policy Transaction : " + policyTransaction.getPolicyNumber());
+                    updatePolicy(policyTransaction, maybePolicyEntity);
                     //get Payment History
-                    PaymentHistoryEntity paymentHistoryEntity = PaymentHistoryEntity.builder()
-                            .policyNumber(policyTransaction.getPolicyNumber())
-                            .paymentDate(policyTransaction.getPaymentDate())
-                            .paymentMode(policyTransaction.getPaymentMode())
-                            .paymentAmount(policyTransaction.getPremiumPaid())
-                            .build();
-                    //Update Payment History
-                    paymentService.savePayment(paymentHistoryEntity);
-                    log.info("Updated Policy Payment : " + policyTransaction.getPolicyNumber());
+                    updatePayment(policyTransaction);
                 }
             });
         }
+    }
+
+    private void updatePayment(PolicyTransaction policyTransaction) {
+        PaymentHistoryEntity paymentHistoryEntity = PaymentHistoryEntity.builder()
+                .policyNumber(policyTransaction.getPolicyNumber())
+                .paymentDate(policyTransaction.getPaymentDate())
+                .paymentMode(policyTransaction.getPaymentMode())
+                .paymentAmount(policyTransaction.getPremiumPaid())
+                .build();
+        //Update Payment History
+        paymentService.savePayment(paymentHistoryEntity);
+        log.info("Updated Policy Payment : " + policyTransaction.getPolicyNumber());
+    }
+
+    private void updatePolicy(PolicyTransaction policyTransaction, PolicyEntity maybePolicyEntity) {
+        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
+        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
+        policyService.savePolicy(maybePolicyEntity);
+        log.info("Updated Policy Transaction : " + policyTransaction.getPolicyNumber());
     }
 }
