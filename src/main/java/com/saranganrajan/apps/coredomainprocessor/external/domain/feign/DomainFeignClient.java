@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name="core-domain-service", url="http://localhost:8082")
 public interface DomainFeignClient {
-    @PostMapping(path = "/domain/process")
-    ResponseEntity<PolicyAggregate> processPolicyTransaction(@RequestBody PolicyAggregate policies);
+    @PostMapping(path = "/domain/process", produces = "application/json")
+    ResponseEntity<PolicyAggregate> processPolicyTransaction(@RequestBody PolicyAggregate policyAggregate);
 }
