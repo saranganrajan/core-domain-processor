@@ -16,4 +16,5 @@ public class PolicyTransaction {
     private Double premiumPaid;
     private LocalDate paymentDate;
     private String paymentMode;
+    private String status;
 }

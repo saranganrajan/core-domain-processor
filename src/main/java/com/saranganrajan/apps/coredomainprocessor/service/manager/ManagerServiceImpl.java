@@ -1,27 +1,27 @@
 package com.saranganrajan.apps.coredomainprocessor.service.manager;
 
-import com.saranganrajan.apps.coredomainprocessor.dto.CustomerPolicy;
-import com.saranganrajan.apps.coredomainprocessor.dto.Policy;
-import com.saranganrajan.apps.coredomainprocessor.dto.PolicyAggregate;
-import com.saranganrajan.apps.coredomainprocessor.dto.PolicyTransaction;
+import com.saranganrajan.apps.coredomainprocessor.dto.*;
+import com.saranganrajan.apps.coredomainprocessor.dto.mapper.PolicyMapper;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PaymentHistoryEntity;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
+import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyTransactionEntity;
+import com.saranganrajan.apps.coredomainprocessor.external.domain.feign.AHMFFeignClient;
 import com.saranganrajan.apps.coredomainprocessor.external.domain.feign.DomainFeignClient;
 import com.saranganrajan.apps.coredomainprocessor.handler.AggregateHandler;
-import com.saranganrajan.apps.coredomainprocessor.service.agent.AgentService;
 import com.saranganrajan.apps.coredomainprocessor.service.customer.CustomerService;
-import com.saranganrajan.apps.coredomainprocessor.service.payment.PaymentService;
 import com.saranganrajan.apps.coredomainprocessor.service.policy.PolicyService;
-import com.saranganrajan.apps.coredomainprocessor.service.product.PlanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -29,60 +29,65 @@ public class ManagerServiceImpl implements ManagerService {
 
     PolicyService policyService;
     CustomerService customerService;
-    PlanService planService;
-    AgentService agentService;
-    PaymentService paymentService;
     AggregateHandler aggregateHandler;
     DomainFeignClient domainFeignClient;
+    AHMFFeignClient ahmfFeignClient;
 
     @Autowired
     public ManagerServiceImpl(PolicyService policyService,
                               CustomerService customerService,
-                              PlanService planService,
-                              AgentService agentService,
-                              PaymentService paymentService,
                               AggregateHandler aggregateHandler,
-                              DomainFeignClient domainFeignClient) {
+                              DomainFeignClient domainFeignClient,
+                              AHMFFeignClient ahmfFeignClient) {
         this.policyService = policyService;
         this.customerService = customerService;
-        this.planService = planService;
-        this.agentService = agentService;
-        this.paymentService = paymentService;
         this.aggregateHandler = aggregateHandler;
         this.domainFeignClient = domainFeignClient;
+        this.ahmfFeignClient = ahmfFeignClient;
     }
 
     @Override
     @Transactional
     public void processTransactions(List<PolicyTransaction> policyTransactions) {
         if (!CollectionUtils.isEmpty(policyTransactions)) {
-            policyTransactions.forEach(policyTransaction -> {
-                log.info("Processing policy : " + policyTransaction.getPolicyNumber());
-                Optional<PolicyEntity> policyEntity = policyService.getPolicyInformation(policyTransaction.getPolicyNumber());
-                if (policyEntity.isPresent()) {
-                    //Update Policy
-                    updatePolicy(policyTransaction, policyEntity.get());
-                    //get Payment History
-                    updatePayment(policyTransaction);
-                    //Form PolicyAggregate
-                    try {
-                        List<CustomerPolicy> customerPolicies = aggregateHandler.prepareCustomerPolicyObject(policyEntity.get());
-                        PolicyAggregate policyAggregate = PolicyAggregate.builder()
-                                .policy(aggregateHandler.preparePolicyObject(policyEntity.get()))
-                                .customerPolicies(customerPolicies)
-                                .customers(aggregateHandler.prepareCustomers(customerPolicies))
-                                .build();
-                        log.info(policyAggregate.toString());
-                        domainFeignClient.processPolicyTransaction(policyAggregate);
-                    } catch (SQLException sqlException) {
-                       log.error(sqlException.getLocalizedMessage());
-                    }
-                }
-            });
+            List<PolicyTransactionEntity> policyTransactionEntities = saveTransactions(policyTransactions);
+            manageTransactions(policyTransactionEntities);
         }
     }
 
-    private void updatePayment(PolicyTransaction policyTransaction) {
+    public void manageTransactions(List<PolicyTransactionEntity> policyTransactions) {
+        policyTransactions.forEach(policyTransaction -> {
+            log.info("Processing policy : " + policyTransaction.getPolicyNumber());
+            Optional<PolicyEntity> policyEntity = policyService.getPolicyInformation(policyTransaction.getPolicyNumber());
+            if (policyEntity.isPresent()) {
+                PolicyEntity maybePolicy = policyEntity.get();
+                //Update Policy
+                updatePolicy(policyTransaction, maybePolicy);
+                //get Payment History
+                updatePayment(policyTransaction);
+                //Form PolicyAggregate
+                try {
+
+                    List<CustomerPolicy> customerPolicies = aggregateHandler.prepareCustomerPolicyObject(maybePolicy);
+                    List<Customer> customers = aggregateHandler.prepareCustomers(customerPolicies);
+                    customers.stream().forEach(customer -> {
+                        customer.setCustomerTransactionId(UUID.randomUUID().toString());
+                    });
+                    PolicyAggregate policyAggregate = PolicyAggregate.builder()
+                            .policy(aggregateHandler.preparePolicyObject(maybePolicy, policyTransaction.getPolicyTransactionId()))
+                            .customerPolicies(customerPolicies)
+                            .customers(customers)
+                            .build();
+                    log.info(policyAggregate.toString());
+                    domainFeignClient.processPolicyTransaction(policyAggregate);
+                } catch (SQLException sqlException) {
+                    log.error(sqlException.getLocalizedMessage());
+                }
+            }
+        });
+    }
+
+    private void updatePayment(PolicyTransactionEntity policyTransaction) {
         PaymentHistoryEntity paymentHistoryEntity = PaymentHistoryEntity.builder()
                 .policyNumber(policyTransaction.getPolicyNumber())
                 .paymentDate(policyTransaction.getPaymentDate())
@@ -90,16 +95,29 @@ public class ManagerServiceImpl implements ManagerService {
                 .paymentAmount(policyTransaction.getPremiumPaid())
                 .build();
         //Update Payment History
-        paymentService.savePayment(paymentHistoryEntity);
+        //paymentService.savePayment(paymentHistoryEntity);
         log.info("Updated Policy Payment : " + policyTransaction.getPolicyNumber());
     }
 
-    private void updatePolicy(PolicyTransaction policyTransaction, PolicyEntity policyEntity) {
+    private void updatePolicy(PolicyTransactionEntity policyTransaction, PolicyEntity policyEntity) {
         PolicyEntity maybePolicyEntity = policyEntity;
         maybePolicyEntity.setLastPaymentMode(policyTransaction.getPaymentMode());
-        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() + policyTransaction.getPremiumPaid());
-        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() - policyTransaction.getPremiumPaid());
-        policyService.savePolicy(maybePolicyEntity);
+        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
+        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
+        //policyService.savePolicy(maybePolicyEntity);
         log.info("Updated Policy Transaction : " + policyTransaction.getPolicyNumber());
+    }
+
+    private List<PolicyTransactionEntity> saveTransactions(List<PolicyTransaction> policyTransactions) {
+        policyTransactions.forEach(policyTransaction -> {
+            policyTransaction.setStatus(ProcessStatus.PENDING.name());
+        });
+        List<PolicyTransactionEntity> policyTransactionEntities = new ArrayList<>();
+        policyTransactions.forEach(policyTransaction -> {
+            policyTransactionEntities.add(PolicyMapper.INSTANCE.policyTransactionDtoToEntity(policyTransaction));
+        });
+
+        ResponseEntity<List<PolicyTransactionEntity>> listResponseEntity =  ahmfFeignClient.saveTransactions(policyTransactionEntities);
+        return listResponseEntity.getBody();
     }
 }

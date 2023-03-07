@@ -194,3 +194,97 @@
 2023-03-07T19:21:39,142+0800 [87699 14] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
 2023-03-07T19:21:39,173+0800 [87699 43] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@7874dfb7 tried to finish but ServiceManager not started
 2023-03-07T19:21:40,033+0800 [87699 14] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2023-03-07T23:11:36,731+0800 [27584 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\logs\newrelic_agent.log
+2023-03-07T23:11:36,734+0800 [27584 1] com.newrelic INFO: JRE vendor Oracle Corporation version 11.0.10
+2023-03-07T23:11:36,735+0800 [27584 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 11.0.10+8-LTS-162
+2023-03-07T23:11:36,735+0800 [27584 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2023-03-07T23:11:36,735+0800 [27584 1] com.newrelic INFO: Agent Host: Saran-Acer IP: 192.168.18.11
+2023-03-07T23:11:36,735+0800 [27584 1] com.newrelic INFO: New Relic Agent v8.0.1 is initializing...
+2023-03-07T23:11:39,578+0800 [27584 21] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2023-03-07T23:11:45,379+0800 [27584 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2023-03-07T23:11:46,672+0800 [27584 1] com.newrelic INFO: Setting audit_mode to false
+2023-03-07T23:11:47,615+0800 [27584 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\.\newrelic.yml
+2023-03-07T23:11:47,627+0800 [27584 1] com.newrelic INFO: New Relic Agent v8.0.1 has started
+2023-03-07T23:11:47,627+0800 [27584 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@20322d26
+2023-03-07T23:11:47,628+0800 [27584 1] com.newrelic INFO: Premain startup complete in 15,382ms
+2023-03-07T23:12:07,968+0800 [27584 1] com.newrelic INFO: Server Info: Apache Tomcat/9.0.71
+2023-03-07T23:12:42,854+0800 [27584 38] com.newrelic INFO: Host name is Saran-Acer, display host Saran-Acer for application core-domain-processor
+2023-03-07T23:12:42,855+0800 [27584 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-07T23:12:43,746+0800 [27584 38] com.newrelic INFO: Collector redirection to collector-001.newrelic.com:443
+2023-03-07T23:12:45,471+0800 [27584 38] com.newrelic INFO: Max payload size is 1,000,000 bytes
+2023-03-07T23:12:45,472+0800 [27584 38] com.newrelic INFO: Agent run id: BRsuv5-jawIYADqS9yJ7pGZkB1S4AAIBAAAnIQEAAGvAAgQifiF1AwAFOC4wLjEAClNhcmFuLUFjZXIAFWNvcmUtZG9tYWluLXByb2Nlc3Nvcg
+2023-03-07T23:12:45,472+0800 [27584 38] com.newrelic INFO: Agent 27584@Saran-Acer/core-domain-processor connected to collector.newrelic.com:443
+2023-03-07T23:12:45,473+0800 [27584 38] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/3838711/applications/578691445
+2023-03-07T23:12:45,476+0800 [27584 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-07T23:12:45,476+0800 [27584 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-07T23:12:45,476+0800 [27584 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-07T23:12:45,479+0800 [27584 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-07T23:12:45,480+0800 [27584 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-07T23:12:45,480+0800 [27584 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-07T23:12:46,555+0800 [27584 38] com.newrelic INFO: Real user monitoring is enabled for application core-domain-processor. Auto instrumentation is enabled.
+2023-03-07T23:12:46,556+0800 [27584 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-07T23:15:49,267+0800 [27584 14] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2023-03-07T23:15:49,527+0800 [27584 14] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\logs\newrelic_agent.log
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: JRE vendor Oracle Corporation version 11.0.10
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 11.0.10+8-LTS-162
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: Agent Host: Saran-Acer IP: 192.168.18.11
+2023-03-07T23:22:28,955+0800 [26216 1] com.newrelic INFO: New Relic Agent v8.0.1 is initializing...
+2023-03-07T23:22:29,669+0800 [26216 21] com.newrelic INFO: Instrumentation com.newrelic.instrumentation.jdbc-resultset is disabled. Skipping.
+2023-03-07T23:22:31,389+0800 [26216 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2023-03-07T23:22:31,859+0800 [26216 1] com.newrelic INFO: Setting audit_mode to false
+2023-03-07T23:22:32,118+0800 [26216 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\.\newrelic.yml
+2023-03-07T23:22:32,126+0800 [26216 1] com.newrelic INFO: New Relic Agent v8.0.1 has started
+2023-03-07T23:22:32,126+0800 [26216 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@20322d26
+2023-03-07T23:22:32,126+0800 [26216 1] com.newrelic INFO: Premain startup complete in 4,177ms
+2023-03-07T23:22:38,385+0800 [26216 1] com.newrelic INFO: Server Info: Apache Tomcat/9.0.71
+2023-03-07T23:22:47,152+0800 [26216 38] com.newrelic INFO: Host name is Saran-Acer, display host Saran-Acer for application core-domain-processor
+2023-03-07T23:22:47,153+0800 [26216 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-07T23:22:47,782+0800 [26216 38] com.newrelic INFO: Collector redirection to collector-001.newrelic.com:443
+2023-03-07T23:22:48,795+0800 [26216 38] com.newrelic INFO: Max payload size is 1,000,000 bytes
+2023-03-07T23:22:48,795+0800 [26216 38] com.newrelic INFO: Agent run id: BRw8dmKI0E_HADqS9yJ7pGZkB1cQAAIBAAAnIQEAAGZoAgQifiF1AwAFOC4wLjEAClNhcmFuLUFjZXIAFWNvcmUtZG9tYWluLXByb2Nlc3Nvcg
+2023-03-07T23:22:48,795+0800 [26216 38] com.newrelic INFO: Agent 26216@Saran-Acer/core-domain-processor connected to collector.newrelic.com:443
+2023-03-07T23:22:48,795+0800 [26216 38] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/3838711/applications/578691445
+2023-03-07T23:22:48,797+0800 [26216 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-07T23:22:48,797+0800 [26216 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-07T23:22:48,797+0800 [26216 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-07T23:22:48,799+0800 [26216 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-07T23:22:48,799+0800 [26216 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-07T23:22:48,799+0800 [26216 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-07T23:22:49,332+0800 [26216 38] com.newrelic INFO: Real user monitoring is enabled for application core-domain-processor. Auto instrumentation is enabled.
+2023-03-07T23:22:49,333+0800 [26216 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-07T23:28:20,534+0800 [26216 14] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2023-03-07T23:28:20,719+0800 [26216 42] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@53e7a4ee tried to finish but ServiceManager not started
+2023-03-07T23:28:21,029+0800 [26216 14] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+2023-03-08T01:14:21,950+0800 [25588 1] com.newrelic INFO: Writing to New Relic log file: C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\logs\newrelic_agent.log
+2023-03-08T01:14:21,951+0800 [25588 1] com.newrelic INFO: JRE vendor Oracle Corporation version 11.0.10
+2023-03-08T01:14:21,951+0800 [25588 1] com.newrelic INFO: JVM vendor Oracle Corporation Java HotSpot(TM) 64-Bit Server VM version 11.0.10+8-LTS-162
+2023-03-08T01:14:21,951+0800 [25588 1] com.newrelic INFO: OS Windows 10 version 10.0 arch amd64
+2023-03-08T01:14:21,951+0800 [25588 1] com.newrelic INFO: Agent Host: Saran-Acer IP: 192.168.18.11
+2023-03-08T01:14:21,951+0800 [25588 1] com.newrelic INFO: New Relic Agent v8.0.1 is initializing...
+2023-03-08T01:14:24,326+0800 [25588 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+2023-03-08T01:14:24,734+0800 [25588 1] com.newrelic INFO: Setting audit_mode to false
+2023-03-08T01:14:24,935+0800 [25588 1] com.newrelic.agent.config.ConfigServiceImpl INFO: Configuration file is C:\Users\saran\OneDrive\Documents\Sarangapani\Upgrad\Thesis\Implementation\Source\core\core-domain-processor\opt\newrelic\.\newrelic.yml
+2023-03-08T01:14:24,945+0800 [25588 1] com.newrelic INFO: New Relic Agent v8.0.1 has started
+2023-03-08T01:14:24,945+0800 [25588 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@20322d26
+2023-03-08T01:14:24,945+0800 [25588 1] com.newrelic INFO: Premain startup complete in 4,048ms
+2023-03-08T01:14:30,278+0800 [25588 1] com.newrelic INFO: Server Info: Apache Tomcat/9.0.71
+2023-03-08T01:14:39,967+0800 [25588 38] com.newrelic INFO: Host name is Saran-Acer, display host Saran-Acer for application core-domain-processor
+2023-03-08T01:14:39,968+0800 [25588 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-08T01:14:40,547+0800 [25588 38] com.newrelic INFO: Collector redirection to collector-001.newrelic.com:443
+2023-03-08T01:14:41,542+0800 [25588 38] com.newrelic INFO: Max payload size is 1,000,000 bytes
+2023-03-08T01:14:41,542+0800 [25588 38] com.newrelic INFO: Agent run id: Bfjg4zrFK2fVADqS9yJ7pGZkB3FQAAIBAAAnIQEAAGP0AgQifiF1AwAFOC4wLjEAClNhcmFuLUFjZXIAFWNvcmUtZG9tYWluLXByb2Nlc3Nvcg
+2023-03-08T01:14:41,543+0800 [25588 38] com.newrelic INFO: Agent 25588@Saran-Acer/core-domain-processor connected to collector.newrelic.com:443
+2023-03-08T01:14:41,543+0800 [25588 38] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/3838711/applications/578691445
+2023-03-08T01:14:41,545+0800 [25588 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-08T01:14:41,545+0800 [25588 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-08T01:14:41,545+0800 [25588 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-08T01:14:41,546+0800 [25588 38] com.newrelic INFO: Using default collector host: collector.newrelic.com
+2023-03-08T01:14:41,547+0800 [25588 38] com.newrelic INFO: Using default metric ingest URI: https://metric-api.newrelic.com/metric/v1
+2023-03-08T01:14:41,547+0800 [25588 38] com.newrelic INFO: Using default event ingest URI: https://insights-collector.newrelic.com/v1/accounts/events
+2023-03-08T01:14:42,542+0800 [25588 38] com.newrelic INFO: Real user monitoring is enabled for application core-domain-processor. Auto instrumentation is enabled.
+2023-03-08T01:14:42,543+0800 [25588 38] com.newrelic INFO: New Relic JFR Monitor is disabled: JFR config has not been enabled in the Java agent.
+2023-03-08T01:47:05,721+0800 [25588 14] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+2023-03-08T01:47:05,881+0800 [25588 42] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@75651844 tried to finish but ServiceManager not started
+2023-03-08T01:47:06,204+0800 [25588 14] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown

@@ -1,13 +1,7 @@
 package com.saranganrajan.apps.coredomainprocessor.dto.mapper;
 
-import com.saranganrajan.apps.coredomainprocessor.dto.CustomerPolicy;
-import com.saranganrajan.apps.coredomainprocessor.dto.Policy;
-import com.saranganrajan.apps.coredomainprocessor.dto.PolicyPlan;
-import com.saranganrajan.apps.coredomainprocessor.dto.PolicyStatus;
-import com.saranganrajan.apps.coredomainprocessor.external.database.entity.CustomerPolicyEntity;
-import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PlanEntity;
-import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
-import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyStatusEntity;
+import com.saranganrajan.apps.coredomainprocessor.dto.*;
+import com.saranganrajan.apps.coredomainprocessor.external.database.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -30,5 +24,8 @@ public interface PolicyMapper {
 
     PolicyPlan planEntityToDto(PlanEntity planEntity);
     PlanEntity planDtoToEntity(PolicyPlan policyPlan);
+
+    PolicyTransaction policyTransactionEntityToDto(PolicyTransactionEntity policyTransactionEntity);
+    PolicyTransactionEntity policyTransactionDtoToEntity(PolicyTransaction policyTransaction);
 
 }

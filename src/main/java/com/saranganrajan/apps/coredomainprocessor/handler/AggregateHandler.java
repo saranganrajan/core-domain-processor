@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -42,8 +43,9 @@ public class AggregateHandler {
     CustomerService customerService;
 
 
-    public Policy preparePolicyObject(PolicyEntity policyEntity) {
+    public Policy preparePolicyObject(PolicyEntity policyEntity, String policyTransactionId) {
         Policy policy = PolicyMapper.INSTANCE.policyEntityToDto(policyEntity);
+        policy.setPolicyTransactionId(policyTransactionId);
         policy.setAgentName(agentService.getAgentById(policyEntity.getAgentCode()).get().getAgentName());
         policy.setPlan(planService.getPlanById(policyEntity.getPlanCode()).get().getPlanDescription());
         policy.setPaymentMode(paymentService.getPaymentModeByCode(policyEntity.getLastPaymentMode()).get().getDescription());

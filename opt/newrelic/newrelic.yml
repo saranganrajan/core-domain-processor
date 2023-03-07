@@ -190,7 +190,7 @@ common: &default_settings
     # which will use the threshold for the "Frustrated" Apdex level
     # (greater than four times the apdex_t value).
     # Default is apdex_f.
-    transaction_threshold: apdex_f
+    transaction_threshold: 30.0
 
     # When transaction tracer is on, SQL statements can optionally be
     # recorded. The recorder has three modes, "off" which sends no
@@ -209,7 +209,7 @@ common: &default_settings
     # then capture and send to New Relic the current stack trace. This is
     # helpful for pinpointing where long SQL calls originate from.
     # Default is 0.5 seconds.
-    stack_trace_threshold: 0.5
+    stack_trace_threshold: 30
 
     # Determines whether the agent will capture query plans for slow
     # SQL queries. Only supported for MySQL and PostgreSQL.
@@ -219,7 +219,7 @@ common: &default_settings
     # Threshold for query execution time below which query plans will 
     # not be captured. Relevant only when `explain_enabled` is true.
     # Default is 0.5 seconds.
-    explain_threshold: 0.5
+    explain_threshold: 30
 
     # Use this setting to control the variety of transaction traces.
     # The higher the setting, the greater the variety.
@@ -341,7 +341,7 @@ common: &default_settings
 
     # This instrumentation reports metrics for resultset operations.
     com.newrelic.instrumentation.jdbc-resultset:
-      enabled: false
+      enabled: true
 
     # Classes loaded by classloaders in this list will not be instrumented.
     # This is a useful optimization for runtimes which use classloaders to

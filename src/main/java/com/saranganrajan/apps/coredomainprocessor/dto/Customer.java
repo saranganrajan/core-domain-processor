@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Customer {
+    private String customerTransactionId;
     private String customerNumber;
     private String customerName;
     private LocalDate dateOfBirth;

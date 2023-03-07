@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Setter
 public class Policy {
 
+    private String policyTransactionId;
     private String policyNumber;
     private String planCode;
     private String plan;

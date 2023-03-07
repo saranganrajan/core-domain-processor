@@ -3,6 +3,7 @@ package com.saranganrajan.apps.coredomainprocessor.controller;
 import com.saranganrajan.apps.coredomainprocessor.dto.PolicyTransaction;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.CustomerEntity;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyEntity;
+import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PolicyTransactionEntity;
 import com.saranganrajan.apps.coredomainprocessor.service.customer.CustomerService;
 import com.saranganrajan.apps.coredomainprocessor.service.manager.ManagerService;
 import com.saranganrajan.apps.coredomainprocessor.service.policy.PolicyService;
@@ -38,6 +39,11 @@ public class CommonController {
     @PostMapping(path = "/policy/premium/pay", consumes = "application/json")
     public void processPolicy(@RequestBody List<PolicyTransaction> policies) {
         managerService.processTransactions(policies);
+    }
+
+    @PostMapping(path = "/policy/replay", consumes = "application/json")
+    public void manageTransactions(@RequestBody List<PolicyTransactionEntity> policies) {
+        managerService.manageTransactions(policies);
     }
 
     @GetMapping
