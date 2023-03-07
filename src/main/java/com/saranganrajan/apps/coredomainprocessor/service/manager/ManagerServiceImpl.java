@@ -97,8 +97,8 @@ public class ManagerServiceImpl implements ManagerService {
     private void updatePolicy(PolicyTransaction policyTransaction, PolicyEntity policyEntity) {
         PolicyEntity maybePolicyEntity = policyEntity;
         maybePolicyEntity.setLastPaymentMode(policyTransaction.getPaymentMode());
-        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() - policyTransaction.getPremiumPaid());
-        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() + policyTransaction.getPremiumPaid());
+        maybePolicyEntity.setPremiumPaid(maybePolicyEntity.getPremiumPaid() + policyTransaction.getPremiumPaid());
+        maybePolicyEntity.setPremiumDue(maybePolicyEntity.getPremiumDue() - policyTransaction.getPremiumPaid());
         policyService.savePolicy(maybePolicyEntity);
         log.info("Updated Policy Transaction : " + policyTransaction.getPolicyNumber());
     }
