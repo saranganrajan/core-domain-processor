@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name="ahmf-manager", url="http://20.120.126.112:8086")
+@FeignClient(name="ahmf-manager", url="http://localhost:8086")
 public interface AHMFFeignClient {
     @PostMapping(path = "/manager/audit/save", produces = "application/json")
     ResponseEntity<List<PolicyTransactionEntity>> saveTransactions(@RequestBody List<PolicyTransactionEntity> policyTransactions);
