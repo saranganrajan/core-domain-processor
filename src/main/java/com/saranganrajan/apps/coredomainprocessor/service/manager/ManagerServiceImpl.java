@@ -1,5 +1,6 @@
 package com.saranganrajan.apps.coredomainprocessor.service.manager;
 
+import com.google.gson.Gson;
 import com.saranganrajan.apps.coredomainprocessor.dto.*;
 import com.saranganrajan.apps.coredomainprocessor.dto.mapper.PolicyMapper;
 import com.saranganrajan.apps.coredomainprocessor.external.database.entity.PaymentHistoryEntity;
@@ -79,6 +80,7 @@ public class ManagerServiceImpl implements ManagerService {
                             .customers(customers)
                             .build();
                     log.info(policyAggregate.toString());
+                    String policyAggregateString =new Gson().toJson(policyAggregate);
                     domainFeignClient.processPolicyTransaction(policyAggregate);
                 } catch (SQLException sqlException) {
                     log.error(sqlException.getLocalizedMessage());
@@ -117,7 +119,8 @@ public class ManagerServiceImpl implements ManagerService {
             policyTransactionEntities.add(PolicyMapper.INSTANCE.policyTransactionDtoToEntity(policyTransaction));
         });
 
-        ResponseEntity<List<PolicyTransactionEntity>> listResponseEntity =  ahmfFeignClient.saveTransactions(policyTransactionEntities);
-        return listResponseEntity.getBody();
+       // ResponseEntity<List<PolicyTransactionEntity>> listResponseEntity =  ahmfFeignClient.saveTransactions(policyTransactionEntities);
+        return policyTransactionEntities;
+        //return listResponseEntity.getBody();
     }
 }
